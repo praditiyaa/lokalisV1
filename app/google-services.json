@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "770772218595",
+    "firebase_url": "https://warungiv1-default-rtdb.firebaseio.com",
+    "project_id": "warungiv1",
+    "storage_bucket": "warungiv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770772218595:android:79a59b369b525277ba4bd6",
+        "android_client_info": {
+          "package_name": "com.lokalis.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770772218595-07i8dgvl209g6f33jeg11u0fqgrc3rvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnVQ7bIQlkkI1yPfOkMYFYpJ7ivqrUYWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770772218595-07i8dgvl209g6f33jeg11u0fqgrc3rvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
