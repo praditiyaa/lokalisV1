@@ -34,7 +34,7 @@
                 android:fontFamily="@font/autour_one"
                 android:includeFontPadding="false"
                 android:text="Aditiya Pratama"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/profileUserName"
@@ -230,6 +230,18 @@
                 android:fontFamily="@font/roboto"
                 android:text="Update" />
 
+            <Button
+                android:id="@+id/logoutProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:fontFamily="@font/roboto"
+                android:text="Logout"
+                android:textColor="@color/black"
+                app:icon="@drawable/baseline_login_black_24dp"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconTint="#000000" />
 
         </LinearLayout>
 

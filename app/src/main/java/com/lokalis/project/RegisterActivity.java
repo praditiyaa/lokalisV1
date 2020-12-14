@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //account has been made sign
                 Toast.makeText(RegisterActivity.this,"Account has been made", Toast.LENGTH_LONG).show();
 
-                //delay
+                //delay to login page after account is made
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

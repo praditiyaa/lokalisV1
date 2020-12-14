@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         logButton = findViewById(R.id.buttonLoginLog);
         logToRegister = findViewById(R.id.buttonRegisterLog);
 
-        //Go to register page
+        //go to register page
         callRegisterActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //go to profile page
         callProfileActivity.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //validation
+    //validation for username
     private Boolean validationUsername() {
 
         String val = logUsername.getEditText().getText().toString();
@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //validation for password
     private Boolean validationPassword() {
 
         String val = logPassword.getEditText().getText().toString();
