@@ -34,7 +34,7 @@
                 android:fontFamily="@font/autour_one"
                 android:includeFontPadding="false"
                 android:text="Aditiya Pratama"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/profileUserName"
@@ -48,6 +48,21 @@
                 android:includeFontPadding="false"
                 android:text="praditiya92"
                 android:textSize="14sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:isScrollContainer="true"
+                android:src="@drawable/baseline_menu_black_24dp"
+                app:backgroundTint="@color/orange_100" />
+
 
         </RelativeLayout>
 
@@ -170,7 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_supervised_user_circle_black_24dp"
-                    android:drawablePadding="20dp"/>
+                    android:drawablePadding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -186,7 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_alternate_email_black_24dp"
-                    android:drawablePadding="20dp"/>
+                    android:drawablePadding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -202,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_phone_black_24dp"
-                    android:drawablePadding="20dp"/>
+                    android:drawablePadding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -218,7 +233,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_verified_user_black_24dp"
-                    android:drawablePadding="20dp"/>
+                    android:drawablePadding="20dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -241,7 +256,7 @@
                 app:icon="@drawable/baseline_login_black_24dp"
                 app:iconGravity="textStart"
                 app:iconPadding="10dp"
-                app:iconTint="#000000" />
+                app:iconTint="@color/orange_100" />
 
         </LinearLayout>
 

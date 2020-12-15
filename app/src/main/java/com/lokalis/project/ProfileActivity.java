@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,7 +20,8 @@ public class ProfileActivity extends AppCompatActivity {
     //declaring variable
     TextInputLayout editName, editEmailAddress, editPhoneNumber, editPassword;
     TextView proName, proUsername;
-    Button proUpdate;
+    Button proUpdate, proLogout;
+    FloatingActionButton proDrawer;
 
     //global variable
     String user_username, user_name, user_email, user_phoneNumber, user_password;
@@ -43,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
         proName = findViewById(R.id.profileName);
         proUsername = findViewById(R.id.profileUserName);
         proUpdate = findViewById(R.id.updateProfile);
+        proLogout = findViewById(R.id.logoutProfile);
+        proDrawer = findViewById(R.id.floatingMenu);
 
         //show all data
         showAllUserData();
@@ -55,6 +59,28 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.makeText(ProfileActivity.this, "Data has been updated", Toast.LENGTH_LONG).show();
                 }
                 else Toast.makeText(ProfileActivity.this, "Data is the same and can not be updated", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //logout
+        proLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        //side menu
+        proDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ProfileActivity.this, StoreListActivity.class);
+                startActivity(intent);
+
             }
         });
 
