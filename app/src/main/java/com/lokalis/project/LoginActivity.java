@@ -163,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("password", passwordFromDB);
 
                         startActivity(intent);
+                        finish();
 
                     } else {
                         logPassword.setError("Wrong Password");

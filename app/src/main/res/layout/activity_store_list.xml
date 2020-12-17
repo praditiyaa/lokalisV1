@@ -18,24 +18,17 @@
         android:drawableStart="@drawable/baseline_store_mall_directory_black_24dp"
         android:drawablePadding="5dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <EditText
         android:id="@+id/searchStore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="10dp"
         android:layout_below="@+id/textStore"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:hint="Search nearby store">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/baseline_search_black_24dp"
-            android:drawablePadding="5dp"
-            android:inputType="text"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:background="@drawable/ic_border"
+        android:drawableRight="@drawable/baseline_search_black_24dp"
+        android:padding="10dp"
+        android:hint="Search nearby store"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/storeList"

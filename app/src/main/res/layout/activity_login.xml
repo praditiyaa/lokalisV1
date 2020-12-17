@@ -48,6 +48,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:hint="Username"
             android:transitionName="edit_username"
             app:layout_constraintTop_toBottomOf="@+id/signinTextLogin">
@@ -91,23 +92,22 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_button"
             android:text="Login"
+            android:elevation="20dp"
             android:transitionName="button_login" />
 
     </LinearLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:padding="50dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:fontFamily="@font/roboto"
             android:text="Don't Have an Account?" />
 
@@ -116,14 +116,15 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_below="@+id/textRegister"
+            android:layout_centerInParent="true"
             android:fontFamily="@font/roboto"
             android:text="Register here"
             android:textAllCaps="false"
             android:textColor="#1C1C1C"
             android:transitionName="button_register" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

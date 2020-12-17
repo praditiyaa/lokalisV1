@@ -1,5 +1,6 @@
 package com.lokalis.project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
@@ -14,11 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -54,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //validation
-                if(!validationName() | !validationUsername() | !validationEmail() | !validationPhoneNumber() | !validationPassword()){
+                if (!validationName() | !validationUsername() | !validationEmail() | !validationPhoneNumber() | !validationPassword()) {
                     return;
                 }
 
@@ -72,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                 reference.child(username).setValue(helperClass);
 
                 //account has been made sign
-                Toast.makeText(RegisterActivity.this,"Account has been made", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, "Account has been made", Toast.LENGTH_LONG).show();
 
                 //delay to login page after account is made
                 new Handler().postDelayed(new Runnable() {
@@ -93,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this, pairs);
                         startActivity(intent, options.toBundle());
                     }
-                },2000);
+                }, 2000);
 
             }
         });
@@ -123,15 +129,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //validation for every input
-    private Boolean validationName(){
+    private Boolean validationName() {
 
         String val = regName.getEditText().getText().toString();
 
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regName.setError("Field cannot be empty");
             return false;
-        }
-        else{
+        } else {
             regName.setError(null);
             regName.setErrorEnabled(false);
             return true;
@@ -139,24 +144,36 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validationUsername(){
+    private Boolean validationUsername() {
 
         String val = regUsername.getEditText().getText().toString();
         String noWhiteSpace = "\\A\\w{4,20}\\z";
 
-        if(val.isEmpty()){
+        Query usernameCheck = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").equalTo(val);
+        usernameCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount() > 0) {
+                    regUsername.setError("Username already exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if (val.isEmpty()) {
             regUsername.setError("Field cannot be empty");
             return false;
-        }
-        else if(val.length()>=15){
+        } else if (val.length() >= 15) {
             regUsername.setError("Username too long");
             return false;
-        }
-        else if(!val.matches(noWhiteSpace)){
+        } else if (!val.matches(noWhiteSpace)) {
             regUsername.setError("White Spaces are not allowed");
             return false;
-        }
-        else{
+        } else {
             regUsername.setError(null);
             regUsername.setErrorEnabled(false);
             return true;
@@ -164,20 +181,33 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validationEmail(){
+    private Boolean validationEmail() {
 
         String val = regEmail.getEditText().getText().toString();
-        String emailPattern = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$";
+        String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
 
-        if(val.isEmpty()){
+        Query emailCheck = FirebaseDatabase.getInstance().getReference("Users").orderByChild("email").equalTo(val);
+        emailCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount() > 0) {
+                    regEmail.setError("Email address already exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if (val.isEmpty()) {
             regEmail.setError("Field cannot be empty");
             return false;
-        }
-        else if(!val.matches(emailPattern)){
+        } else if (!val.matches(emailPattern)) {
             regEmail.setError("Invalid email address");
             return false;
-        }
-        else{
+        } else {
             regEmail.setError(null);
             regEmail.setErrorEnabled(false);
             return true;
@@ -185,15 +215,29 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validationPhoneNumber(){
+    private Boolean validationPhoneNumber() {
 
         String val = regPhoneNumber.getEditText().getText().toString();
 
-        if(val.isEmpty()){
+        Query usernameCheck = FirebaseDatabase.getInstance().getReference("Users").orderByChild("phoneNumber").equalTo(val);
+        usernameCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount() > 0) {
+                    regPhoneNumber.setError("Phone number already exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if (val.isEmpty()) {
             regPhoneNumber.setError("Field cannot be empty");
             return false;
-        }
-        else {
+        } else {
             regPhoneNumber.setError(null);
             regPhoneNumber.setErrorEnabled(false);
             return true;
@@ -201,24 +245,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validationPassword(){
+    private Boolean validationPassword() {
 
         String val = regPassword.getEditText().getText().toString();
-        String passwordVal = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])$";
+        final Pattern passwordVal = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$");
 
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regPassword.setError("Field cannot be empty");
             return false;
-        }
-        else if(val.matches(passwordVal)){
+        } else if (!passwordVal.matcher(val).matches()) {
             regPassword.setError("Password to weak, improve it");
             return false;
-        }
-        else{
+        } else {
             regPassword.setError(null);
             regPassword.setErrorEnabled(false);
             return true;
         }
 
     }
+
 }

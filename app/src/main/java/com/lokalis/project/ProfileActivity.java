@@ -133,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
     //change email checker
     private boolean isEmailChanged() {
         if (!user_email.equals(editEmailAddress.getEditText().getText().toString())) {
-            reference.child(user_username).child("emailAddress").setValue(editEmailAddress.getEditText().getText().toString());
+            reference.child(user_username).child("email").setValue(editEmailAddress.getEditText().getText().toString());
             user_email = editEmailAddress.getEditText().getText().toString();
             return true;
         } else {

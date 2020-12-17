@@ -2,7 +2,8 @@ package com.lokalis.project;
 
 public class StoreHelperClass {
 
-    public String storeName, images, distance, rating;
+    public String storeName, images, distance;
+    public String rating;
 
     public StoreHelperClass() {
     }
