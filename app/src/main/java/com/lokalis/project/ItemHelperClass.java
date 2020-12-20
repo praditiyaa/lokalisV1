@@ -1,6 +1,6 @@
 package com.lokalis.project;
 
-public class ItemHelperClass {
+public class    ItemHelperClass {
 
     String itemName, itemPrice, itemImage;
 

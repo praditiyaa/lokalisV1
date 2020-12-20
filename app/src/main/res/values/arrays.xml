@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="id_activityScreenTitles">
+
+        <item></item>
+        <item>DashBoard</item>
+        <item>My Profile</item>
+        <item>Nearby Restaurant</item>
+        <item>Settings</item>
+        <item>About Us</item>
+        <item/>
+        <item>Log Out</item>
+
+    </string-array>
+
+    <string-array name="id_activityScreenIcons">
+
+        <item>@drawable/baseline_close_black_24dp</item>
+        <item>@drawable/baseline_dashboard_black_24dp</item>
+        <item>@drawable/baseline_supervised_user_circle_black_24dp</item>
+        <item>@drawable/baseline_store_mall_directory_black_24dp</item>
+        <item>@drawable/baseline_app_settings_alt_black_24dp</item>
+        <item>@drawable/baseline_info_black_24dp</item>
+        <item>0</item>
+        <item>@drawable/baseline_login_black_24dp</item>
+
+    </string-array>
+
+</resources>

@@ -1,57 +1,166 @@
 package com.lokalis.project;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.AdapterView;
 
-public class MainActivity extends AppCompatActivity {
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
+import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-    private static int SPLASH_SCREEN = 3000;
+import java.util.Arrays;
 
-    //declaring variable
-    Animation topAnim, botAnim;
-    ImageView logo;
-    TextView text;
+public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener{
+
+    private static final int POS_CLOSE = 0;
+    private static final int POS_DASHBOARD = 1;
+    private static final int POS_MY_PROFILE = 2;
+    private static final int POS_NEARBY_RES = 3;
+    private static final int POS_SETTINGS = 4;
+    private static final int POS_ABOUT_US = 5;
+    private static final int POS_LOGOUT = 7;
+
+    private String[] screenTitles;
+    private Drawable[] screenIcons;
+
+    private SlidingRootNav slidingRootNav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //Animations
-        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
-        botAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
+        //toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        //hooks
-        logo = findViewById(R.id.logoPic);
-        text = findViewById(R.id.textPic);
+        slidingRootNav = new SlidingRootNavBuilder(this)
+                .withDragDistance(180)
+                .withRootViewScale(0.75f)
+                .withRootViewElevation(25)
+                .withToolbarMenuToggle(toolbar)
+                .withMenuOpened(false)
+                .withContentClickableWhenMenuOpened(false)
+                .withSavedState(savedInstanceState)
+                .withMenuLayout(R.layout.drawer_menu)
+                .inject();
 
-        logo.setAnimation(topAnim);
-        text.setAnimation(botAnim);
+        screenIcons = loadScreenIcons();
+        screenTitles = loadScreenTitles();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
+                createItemFor(POS_CLOSE),
+                createItemFor(POS_DASHBOARD).setChecked(true),
+                createItemFor(POS_MY_PROFILE),
+                createItemFor(POS_NEARBY_RES),
+                createItemFor(POS_SETTINGS),
+                createItemFor(POS_ABOUT_US),
+                new SpaceItem(260),
+                createItemFor(POS_LOGOUT)
+        ));
+        adapter.setListener(this);
 
-                Pair[] pairs = new Pair[2];
-                pairs[0] = new Pair<View, String>(logo, "logo_image");
-                pairs[1] = new Pair<View, String>(text, "text_image");
+        RecyclerView list = findViewById(R.id.drawer_list);
+        list.setNestedScrollingEnabled(false);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(adapter);
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
-                startActivity(intent, options.toBundle());
-                finish();
-            }
-        },SPLASH_SCREEN);
+        adapter.setSelected(POS_DASHBOARD);
     }
+
+    private DrawerItem createItemFor(int position){
+        return new SimpleItem(screenIcons[position],screenTitles[position])
+                .withIconTint(color(R.color.orange_100))
+                .withTextTint(color(R.color.black))
+                .withSelectedIconTint(color(R.color.orange_100))
+                .withSelectedTextTint(color(R.color.orange_100));
+    }
+
+    @ColorInt
+    private int color(@ColorRes int res) {
+        return ContextCompat.getColor(this, res);
+    }
+
+    private Drawable[] loadScreenIcons(){
+        TypedArray ta = getResources().obtainTypedArray(R.array.id_activityScreenIcons);
+        Drawable[] icons = new Drawable[ta.length()];
+        for (int i = 0; i < ta.length(); i++){
+            int id = ta.getResourceId(i, 0);
+            if(id!=0){
+                icons[i] = ContextCompat.getDrawable(this,id);
+            }
+        }
+        ta.recycle();
+        return icons;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    private String[] loadScreenTitles() {
+        return getResources().getStringArray(R.array.id_activityScreenTitles);
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if(position == POS_DASHBOARD){
+            DashBoardFragment dashBoardFragment = new DashBoardFragment();
+            transaction.replace(R.id.container, dashBoardFragment);
+        }
+
+        else if (position == POS_MY_PROFILE) {
+            MyProfileFragment myProfileFragment = new MyProfileFragment();
+            transaction.replace(R.id.container, myProfileFragment);
+        }
+        if (position == POS_NEARBY_RES) {
+            NearbyResFragment nearbyResFragment = new NearbyResFragment();
+            transaction.replace(R.id.container, nearbyResFragment);
+        }
+
+        if (position == POS_SETTINGS) {
+            SettingsFragment settingsFragment = new SettingsFragment();
+            transaction.replace(R.id.container, settingsFragment);
+        }
+
+        if (position == POS_ABOUT_US) {
+            AboutUsFragment aboutUsFragment = new AboutUsFragment();
+            transaction.replace(R.id.container, aboutUsFragment);
+        }
+
+        if (position == POS_LOGOUT) {
+            finish();
+        }
+
+        slidingRootNav.closeMenu();
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+
 }

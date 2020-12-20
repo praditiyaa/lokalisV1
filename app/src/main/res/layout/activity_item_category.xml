@@ -1,37 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="10dp">
 
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/categoryName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Item Category"
+            android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/categoryName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Item Category"
-                android:textSize="18dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/itemSlide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryName" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemSlide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/categoryName" />
+    </RelativeLayout>
 
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,11 +1,21 @@
 package com.lokalis.project;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,8 +24,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
+import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-public class ProfileActivity extends AppCompatActivity {
+import java.util.Arrays;
+
+public class ProfileActivity extends AppCompatActivity{
 
     //declaring variable
     TextInputLayout editName, editEmailAddress, editPhoneNumber, editPassword;
@@ -34,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -47,6 +62,9 @@ public class ProfileActivity extends AppCompatActivity {
         proUpdate = findViewById(R.id.updateProfile);
         proLogout = findViewById(R.id.logoutProfile);
         proDrawer = findViewById(R.id.floatingMenu);
+
+
+
 
         //show all data
         showAllUserData();
@@ -151,5 +169,4 @@ public class ProfileActivity extends AppCompatActivity {
             return false;
         }
     }
-
 }

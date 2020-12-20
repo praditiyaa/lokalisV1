@@ -45,6 +45,47 @@ public class StoreFrontActivity extends AppCompatActivity {
         storeDistance = findViewById((R.id.storeDis));
         manager = new LinearLayoutManager(this);
         categoriesList = findViewById(R.id.itemCatalog);
+        categoriesList.setLayoutManager(manager);
+
+        categoryOption = new FirebaseRecyclerOptions.Builder<CategoryHelperClass>().setQuery(reference,CategoryHelperClass.class).build();
+        adapter = new FirebaseRecyclerAdapter<CategoryHelperClass, CategoryViewHolder>(categoryOption) {
+            @Override
+            protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull CategoryHelperClass model) {
+
+                holder.categoriesName.setText(model.getCategoryName());
+                FirebaseRecyclerOptions<ItemHelperClass> options2 = new FirebaseRecyclerOptions.Builder<ItemHelperClass>().
+                        setQuery(reference.child(model.getCategoryName()).child("Stores"),ItemHelperClass.class).build();
+
+                adapter2 = new FirebaseRecyclerAdapter<ItemHelperClass, ItemViewHolder>(options2) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ItemHelperClass model) {
+                        holder.itemName.setText(model.getItemName());
+                        holder.itemPrice.setText(model.getItemPrice());
+                        Picasso.get().load(model.getItemImages()).into(holder.itemImage);
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View v2= LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list_layout,parent,false);
+                        return new ItemViewHolder(v2);
+                    }
+                };
+                adapter2.startListening();
+                adapter2.notifyDataSetChanged();
+                holder.categoriesLayout.setAdapter(adapter2);
+            }
+
+            @NonNull
+            @Override
+            public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_category,parent,false);
+                return new CategoryViewHolder(v);
+            }
+        };
+        adapter.startListening();
+        categoriesList.setAdapter(adapter);
 
         String storeKey = getIntent().getStringExtra("storeKey");
         reference.child(storeKey).addValueEventListener(new ValueEventListener() {
@@ -58,51 +99,7 @@ public class StoreFrontActivity extends AppCompatActivity {
                     storeName.setText(strNames);
                     storeDistance.setText(strDistances);
 
-                    LoadData();
                 }
-
-            }
-
-            private void LoadData() {
-                categoryOption = new FirebaseRecyclerOptions.Builder<CategoryHelperClass>().setQuery(reference,CategoryHelperClass.class).build();
-                adapter = new FirebaseRecyclerAdapter<CategoryHelperClass, CategoryViewHolder>(categoryOption) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull CategoryHelperClass model) {
-
-                        holder.categoriesName.setText(model.getCategoryName());
-                        FirebaseRecyclerOptions<ItemHelperClass> options2 = new FirebaseRecyclerOptions.Builder<ItemHelperClass>().
-                                setQuery(reference.child(model.getCategoryName()).child("itemCategories"),ItemHelperClass.class).build();
-
-                        adapter2 = new FirebaseRecyclerAdapter<ItemHelperClass, ItemViewHolder>(options2) {
-                            @Override
-                            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ItemHelperClass model) {
-                                holder.itemName.setText(model.getItemName());
-                                holder.itemPrice.setText(model.getItemPrice());
-                                Picasso.get().load(model.getItemImages()).into(holder.itemImage);
-
-                            }
-
-                            @NonNull
-                            @Override
-                            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                                View v2= LayoutInflater.from(getBaseContext()).inflate(R.layout.item_list_layout,parent,false);
-                                return new ItemViewHolder(v2);
-                            }
-                        };
-                        adapter2.startListening();
-                        adapter2.notifyDataSetChanged();
-                        holder.categoriesLayout.setAdapter(adapter2);
-                    }
-
-                    @NonNull
-                    @Override
-                    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View v = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_item_category,parent,false);
-                        return new CategoryViewHolder(v);
-                    }
-                };
-                adapter.startListening();
-                categoriesList.setAdapter(adapter);
 
             }
 

@@ -20,7 +20,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
         //hooks
         categoriesName = itemView.findViewById(R.id.categoryName);
         manager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        categoriesLayout = itemView.findViewById(R.id.itemCatalog);
+        categoriesLayout = itemView.findViewById(R.id.itemSlide);
         categoriesLayout.setLayoutManager(manager);
     }
 }
