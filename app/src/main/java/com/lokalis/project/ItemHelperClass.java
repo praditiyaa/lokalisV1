@@ -1,6 +1,6 @@
 package com.lokalis.project;
 
-public class    ItemHelperClass {
+public class ItemHelperClass {
 
     String itemName, itemPrice, itemImage;
 
@@ -29,11 +29,11 @@ public class    ItemHelperClass {
         this.itemPrice = itemPrice;
     }
 
-    public String getItemImages() {
+    public String getItemImage() {
         return itemImage;
     }
 
-    public void setItemImages(String itemImages) {
-        this.itemImage = itemImages;
+    public void setItemImage(String itemImage) {
+        this.itemImage = itemImage;
     }
 }

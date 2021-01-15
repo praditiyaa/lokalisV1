@@ -30,6 +30,7 @@ public class StoreFrontActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<ItemHelperClass, ItemViewHolder> adapter2;
     FirebaseRecyclerOptions<CategoryHelperClass> categoryOption;
     DatabaseReference reference;
+    DatabaseReference referenceStore;
 
 
     @Override
@@ -38,7 +39,9 @@ public class StoreFrontActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store_front);
 
         //firebase
-        reference = FirebaseDatabase.getInstance().getReference().child("Stores");
+        reference = FirebaseDatabase.getInstance().getReference().child("itemCategories");
+        referenceStore = FirebaseDatabase.getInstance().getReference().child("Stores");
+
 
         //hooks
         storeName = findViewById(R.id.storeName);
@@ -47,6 +50,29 @@ public class StoreFrontActivity extends AppCompatActivity {
         categoriesList = findViewById(R.id.itemCatalog);
         categoriesList.setLayoutManager(manager);
 
+        String storeKey = getIntent().getStringExtra("storeKey");
+        referenceStore.child(storeKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists())
+                {
+                    String strNames = snapshot.child("storeName").getValue().toString();
+                    String strDistances = snapshot.child("distance").getValue().toString();
+                    storeName.setText(strNames);
+                    storeDistance.setText(strDistances);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        LoadData();
+    }
+
+    private void LoadData(){
         categoryOption = new FirebaseRecyclerOptions.Builder<CategoryHelperClass>().setQuery(reference,CategoryHelperClass.class).build();
         adapter = new FirebaseRecyclerAdapter<CategoryHelperClass, CategoryViewHolder>(categoryOption) {
             @Override
@@ -54,14 +80,13 @@ public class StoreFrontActivity extends AppCompatActivity {
 
                 holder.categoriesName.setText(model.getCategoryName());
                 FirebaseRecyclerOptions<ItemHelperClass> options2 = new FirebaseRecyclerOptions.Builder<ItemHelperClass>().
-                        setQuery(reference.child(model.getCategoryName()).child("Stores"),ItemHelperClass.class).build();
-
+                        setQuery(reference.child(model.getCategoryId()).child("items"),ItemHelperClass.class).build();
                 adapter2 = new FirebaseRecyclerAdapter<ItemHelperClass, ItemViewHolder>(options2) {
                     @Override
                     protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ItemHelperClass model) {
                         holder.itemName.setText(model.getItemName());
                         holder.itemPrice.setText(model.getItemPrice());
-                        Picasso.get().load(model.getItemImages()).into(holder.itemImage);
+                        Picasso.get().load(model.getItemImage()).into(holder.itemImage);
 
                     }
 
@@ -85,30 +110,7 @@ public class StoreFrontActivity extends AppCompatActivity {
             }
         };
         adapter.startListening();
+        adapter.notifyDataSetChanged();
         categoriesList.setAdapter(adapter);
-
-        String storeKey = getIntent().getStringExtra("storeKey");
-        reference.child(storeKey).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists())
-                {
-                    String strNames = snapshot.child("storeName").getValue().toString();
-                    String strDistances = snapshot.child("distance").getValue().toString();
-                    storeName.setText(strNames);
-                    storeDistance.setText(strDistances);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
     }
 }

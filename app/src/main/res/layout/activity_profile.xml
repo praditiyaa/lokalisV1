@@ -28,18 +28,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="20dp"
                     android:elevation="5dp"
                     android:src="@drawable/baseline_menu_black_24dp"
-                    app:backgroundTint="#FFD500"
+                    app:backgroundTint="@color/white"
                     app:fabSize="mini" />
 
                 <ImageView
                     android:id="@+id/profilePic"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/profile_pic" />
+                    android:src="@drawable/user" />
 
                 <TextView
                     android:id="@+id/profileName"
@@ -48,7 +48,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/profilePic"
-                    android:fontFamily="@font/autour_one"
+                    android:fontFamily="@font/roboto_medium"
                     android:includeFontPadding="false"
                     android:text="Aditiya Pratama"
                     android:textColor="#FFFFFF"
@@ -62,7 +62,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/profilePic"
-                    android:fontFamily="@font/autour_one"
+                    android:fontFamily="@font/roboto_medium"
                     android:includeFontPadding="false"
                     android:text="praditiya92"
                     android:textColor="#FFFFFF"
@@ -83,7 +83,7 @@
                     android:layout_margin="20dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/orange_100"
                     app:cardElevation="10dp">
 
                     <RelativeLayout
@@ -130,7 +130,7 @@
                     android:layout_margin="20dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/orange_100"
                     app:cardElevation="10dp">
 
                     <RelativeLayout
