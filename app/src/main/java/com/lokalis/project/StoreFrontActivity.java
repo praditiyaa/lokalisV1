@@ -80,7 +80,7 @@ public class StoreFrontActivity extends AppCompatActivity {
 
                 holder.categoriesName.setText(model.getCategoryName());
                 FirebaseRecyclerOptions<ItemHelperClass> options2 = new FirebaseRecyclerOptions.Builder<ItemHelperClass>().
-                        setQuery(reference.child(model.getCategoryId()).child("items"),ItemHelperClass.class).build();
+                        setQuery(reference.child(model.getCategoryName()).child("items"),ItemHelperClass.class).build();
                 adapter2 = new FirebaseRecyclerAdapter<ItemHelperClass, ItemViewHolder>(options2) {
                     @Override
                     protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ItemHelperClass model) {
